@@ -4,9 +4,10 @@ import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class CountDownLatchDemo implements Runnable{
-	static final CountDownLatch end = new CountDownLatch(10);
+	static final CountDownLatch end = new CountDownLatch(10);//计数的个数 10 
 	static final CountDownLatchDemo demo = new CountDownLatchDemo();
 	
 	@Override
@@ -25,11 +26,11 @@ public class CountDownLatchDemo implements Runnable{
 	public static void main(String args[]) throws InterruptedException{
 		ExecutorService exec = Executors.newFixedThreadPool(10);
 		for(int i=0;i<10;i++){
-			exec.submit(demo);
+			Future<?> submit = exec.submit(demo);
 		}
 		
 		//等待检查
-		end.wait();
+		end.await();
 		//发射火箭、、
 		System.out.println("Fire!");
 		exec.shutdown();
