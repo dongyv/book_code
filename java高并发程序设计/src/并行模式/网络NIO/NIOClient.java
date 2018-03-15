@@ -39,18 +39,17 @@ public class NIOClient {
 			if(!selector.isOpen()){
 				break;
 			}
-			
-		}
-		selector.select();
-		Iterator<SelectionKey> ite = this.selector.selectedKeys().iterator();
-		while(ite.hasNext()){
-			SelectionKey key = ite.next();
-			ite.remove();
-			//连接事件发生
-			if(key.isConnectable()){
-				connect(key);
-			}else if(key.isReadable()){
-				read(key);
+			selector.select();
+			Iterator<SelectionKey> ite = this.selector.selectedKeys().iterator();
+			while(ite.hasNext()){
+				SelectionKey key = ite.next();
+				ite.remove();
+				//连接事件发生
+				if(key.isConnectable()){
+					connect(key);
+				}else if(key.isReadable()){
+					read(key);
+				}
 			}
 		}
 	}
